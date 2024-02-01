@@ -27,8 +27,7 @@ The key to decoding the message is to use the words corresponding to the numbers
 6: computers
 
 and your function should return the string "I love computers".
-"""
-"""
+
 high level steps
 - open and process the text file into a dictionary num:word pairs
 X sort the dictionary by keys
@@ -36,37 +35,30 @@ X sort the dictionary by keys
 - create a function which builds the cipher-key staircase list
   - [[1], [2, 3], [4, 5, 6]]
 - create a function which decodes the message by returning elements from the staircase list
-  - get the last item of all element"""
+  - get the last item of all element
+- print out message
+# message = " ".join([str(word) for word in word_list])  # create string message
+"""
+
+word_dict = {3: "love", 6: "computers", 2: "dogs", 4: "cats", 1: "I", 5: "you", }
 
 
-code_dict = {
-    3: "love",
-    6: "computers",
-    2: "dogs",
-    4: "cats",
-    1: "I",
-    5: "you",
-}
+def group_words(code_dict: dict) -> list:
+    sorted_dict = dict(sorted(code_dict.items()))  # sort dict by keys
 
-sorted_dict = dict(sorted(code_dict.items()))  # sort dict by keys
+    word_list = list(sorted_dict.values())  # create word list from sorted
 
-word_list = list(sorted_dict.values())  # create word list from sorted
+    step = 1
+    subsets = []
 
-message = " ".join([str(word) for word in word_list])  # create string message
+    while len(word_list) != 0:  # while the word list is longer than 0
+        if len(word_list) >= step:  # if the word list is longer than step
+            subsets.append(
+                word_list[0:step]
+            )  # append word list items from 0 to step to subsets
+            word_list = word_list[step:]  # shorten the word list with slicing starting from step
+            step += 1
+    return subsets
 
-step = 1
-subsets = []
 
-while len(word_list) != 0:  # while the word list is longer than 0
-    if len(word_list) >= step:  # if the word list is longer than step
-        subsets.append(
-            word_list[0:step]
-        )  # append word list items from 0 to step to subsets
-        word_list = word_list[
-            step:
-        ]  # shorten the word list with slicing starting from step
-        step += 1
-
-print(word_list)
-print(message)
-print(subsets)
+print(group_words(word_dict))
